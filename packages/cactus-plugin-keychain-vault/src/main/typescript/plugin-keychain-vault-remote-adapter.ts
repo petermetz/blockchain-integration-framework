@@ -105,7 +105,7 @@ export class PluginKeychainVaultRemoteAdapter
 
   public async has(key: string): Promise<boolean> {
     try {
-      await this.backend.getKeychainEntry({ key });
+      await this.backend.getKeychainEntryV1({ key });
       return true;
     } catch (ex) {
       // FIXME check for errors being thrown due to something other than
@@ -115,7 +115,7 @@ export class PluginKeychainVaultRemoteAdapter
   }
 
   public async get<T>(key: string): Promise<T> {
-    const { data } = await this.backend.getKeychainEntry({ key });
+    const { data } = await this.backend.getKeychainEntryV1({ key });
     // FIXME what to do here? Does it make any sense to have the get() method
     // of the keychain be generically parameterizable when we know we can only
     // return a string anyway?
@@ -124,14 +124,14 @@ export class PluginKeychainVaultRemoteAdapter
 
   public async set<T>(key: string, value: T): Promise<void> {
     // FIXME Does it make any sense to have the set() method be generic?
-    await this.backend.setKeychainEntry({ key, value: value as any });
+    await this.backend.setKeychainEntryV1({ key, value: value as any });
   }
 
   public async delete(key: string): Promise<void> {
     // FIXME Pretty sure vault can do delete so we don't have to hack it like this
     // but it cannot be done in this code until the rust code has been updated
     // to have that endpoint as well...
-    await this.backend.setKeychainEntry({ key, value: "" });
+    await this.backend.setKeychainEntryV1({ key, value: "" });
   }
 
   public getInstanceId(): string {

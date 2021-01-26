@@ -97,10 +97,10 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getKeychainEntry: async (getKeychainEntryRequest: GetKeychainEntryRequest, options: any = {}): Promise<RequestArgs> => {
+        getKeychainEntryV1: async (getKeychainEntryRequest: GetKeychainEntryRequest, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'getKeychainEntryRequest' is not null or undefined
             if (getKeychainEntryRequest === null || getKeychainEntryRequest === undefined) {
-                throw new RequiredError('getKeychainEntryRequest','Required parameter getKeychainEntryRequest was null or undefined when calling getKeychainEntry.');
+                throw new RequiredError('getKeychainEntryRequest','Required parameter getKeychainEntryRequest was null or undefined when calling getKeychainEntryV1.');
             }
             const localVarPath = `/api/v1/plugins/@hyperledger/cactus-plugin-keychain-vault/get-keychain-entry`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -178,10 +178,10 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        setKeychainEntry: async (setKeychainEntryRequest: SetKeychainEntryRequest, options: any = {}): Promise<RequestArgs> => {
+        setKeychainEntryV1: async (setKeychainEntryRequest: SetKeychainEntryRequest, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'setKeychainEntryRequest' is not null or undefined
             if (setKeychainEntryRequest === null || setKeychainEntryRequest === undefined) {
-                throw new RequiredError('setKeychainEntryRequest','Required parameter setKeychainEntryRequest was null or undefined when calling setKeychainEntry.');
+                throw new RequiredError('setKeychainEntryRequest','Required parameter setKeychainEntryRequest was null or undefined when calling setKeychainEntryV1.');
             }
             const localVarPath = `/api/v1/plugins/@hyperledger/cactus-plugin-keychain-vault/set-keychain-entry`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -232,8 +232,8 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getKeychainEntry(getKeychainEntryRequest: GetKeychainEntryRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetKeychainEntryResponse>> {
-            const localVarAxiosArgs = await DefaultApiAxiosParamCreator(configuration).getKeychainEntry(getKeychainEntryRequest, options);
+        async getKeychainEntryV1(getKeychainEntryRequest: GetKeychainEntryRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetKeychainEntryResponse>> {
+            const localVarAxiosArgs = await DefaultApiAxiosParamCreator(configuration).getKeychainEntryV1(getKeychainEntryRequest, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -259,8 +259,8 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async setKeychainEntry(setKeychainEntryRequest: SetKeychainEntryRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SetKeychainEntryResponse>> {
-            const localVarAxiosArgs = await DefaultApiAxiosParamCreator(configuration).setKeychainEntry(setKeychainEntryRequest, options);
+        async setKeychainEntryV1(setKeychainEntryRequest: SetKeychainEntryRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SetKeychainEntryResponse>> {
+            const localVarAxiosArgs = await DefaultApiAxiosParamCreator(configuration).setKeychainEntryV1(setKeychainEntryRequest, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -282,8 +282,8 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getKeychainEntry(getKeychainEntryRequest: GetKeychainEntryRequest, options?: any): AxiosPromise<GetKeychainEntryResponse> {
-            return DefaultApiFp(configuration).getKeychainEntry(getKeychainEntryRequest, options).then((request) => request(axios, basePath));
+        getKeychainEntryV1(getKeychainEntryRequest: GetKeychainEntryRequest, options?: any): AxiosPromise<GetKeychainEntryResponse> {
+            return DefaultApiFp(configuration).getKeychainEntryV1(getKeychainEntryRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -301,8 +301,8 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        setKeychainEntry(setKeychainEntryRequest: SetKeychainEntryRequest, options?: any): AxiosPromise<SetKeychainEntryResponse> {
-            return DefaultApiFp(configuration).setKeychainEntry(setKeychainEntryRequest, options).then((request) => request(axios, basePath));
+        setKeychainEntryV1(setKeychainEntryRequest: SetKeychainEntryRequest, options?: any): AxiosPromise<SetKeychainEntryResponse> {
+            return DefaultApiFp(configuration).setKeychainEntryV1(setKeychainEntryRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -322,8 +322,8 @@ export class DefaultApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof DefaultApi
      */
-    public getKeychainEntry(getKeychainEntryRequest: GetKeychainEntryRequest, options?: any) {
-        return DefaultApiFp(this.configuration).getKeychainEntry(getKeychainEntryRequest, options).then((request) => request(this.axios, this.basePath));
+    public getKeychainEntryV1(getKeychainEntryRequest: GetKeychainEntryRequest, options?: any) {
+        return DefaultApiFp(this.configuration).getKeychainEntryV1(getKeychainEntryRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -345,8 +345,8 @@ export class DefaultApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof DefaultApi
      */
-    public setKeychainEntry(setKeychainEntryRequest: SetKeychainEntryRequest, options?: any) {
-        return DefaultApiFp(this.configuration).setKeychainEntry(setKeychainEntryRequest, options).then((request) => request(this.axios, this.basePath));
+    public setKeychainEntryV1(setKeychainEntryRequest: SetKeychainEntryRequest, options?: any) {
+        return DefaultApiFp(this.configuration).setKeychainEntryV1(setKeychainEntryRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
