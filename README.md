@@ -51,6 +51,10 @@ Once the last command has finished executing, open link printed on the console w
 * [Project Wiki](https://wiki.hyperledger.org/display/cactus): Schedule and logs of the maintainer meetings
 * [Whitepaper](./whitepaper/whitepaper.md): The official document on Cactus design specifications
 
+## Roadmap
+
+Can be found here: [ROADMAP.md](./ROADMAP.md)
+
 ## Contact
 * mailing list: [cactus@lists.hyperledger.org](mailto:cactus@lists.hyperledger.org)
 * rocketchat channel: [https://chat.hyperledger.org/channel/cactus](https://chat.hyperledger.org/channel/cactus).
