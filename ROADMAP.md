@@ -34,17 +34,27 @@ Halves are defined as:
 
 1. Language Agnostic Plugin Development
     * Vault Keychain Plugin written in Rust as a proof of concept
-2. HTLC plugin for Besu
+1. HTLC plugin for Besu
     * ETH
     * ERC-20
-3. Corda Open Source Ledger Connector Plugin 
+1. Corda Open Source Ledger Connector Plugin 
     * Flow Invocation
     * CordApp Deployment 
-4. Prometheus Monitoring
+1. Prometheus Monitoring
+1. Sawtooth Validator
+    * Block monitoring feature
+    * (Transaction request feature will be added later)
+1. test docker container for Sawtooth
+1. VerifierFactory
+    * to adapt Verifier to both of socket.io-typed Validator and OpenAPI-typed Validator
+1. BLP/electricity-trade
+    * BLP application integrating with Ethereum and Sawtooth
+1. prototype codes of auto-testing framework using Jest
 
 **Fixes:**
 
 1. Fabric 2.x Contract Deployment
+1. car-trade execution procedures
 
 **Security Fixes**
 
@@ -60,17 +70,20 @@ Halves are defined as:
 **Features**
 
 1. Minimum Viable AuthN/AuthZ via OpenID Connect
-2. Indy powered Consortium Plugin Implementation
+1. Indy powered Consortium Plugin Implementation
     * With at least one of the examples using it as well
-3. Kubernetes Integration
+1. Kubernetes Integration
     * Helm Charts
     * KNative
     * Minikube based end to end testing
-4. Public Test Deployment of a Cactus Consortium
+1. Public Test Deployment of a Cactus Consortium
     * Multiple nodes
     * Public domain: https://cactus.stream
-5. Keychain Plugin Implementations:
+1. Keychain Plugin Implementations:
     * AWS Secret Manager
+1. Indy Validator
+1. test docker container for Indy
+1. test docker container for Iroha
 
 **Fixes:**
 
@@ -93,14 +106,54 @@ Halves are defined as:
 
 ## 2021 Q3
 
+**Checking points for releasing V1-RC**
+
+* **Validator**
+    - Validators for Hyperledger ledgers (Fabric, Sawtooth, Besu, Indy, Iroha), Quorum, and Corda
+
+* **Verifier**
+    - All sync/async requests from BLP must communicate with  Validator (toward ledgers) via Verifier
+    - transaction signer features for Hyperledger ledgers (Fabric, Sawtooth, Besu, Indy, Iroha), Quorum, and Corda
+
+* **BLP-attached optional plugins**
+
+* **BLP applications**
+    - BLP applications using each ledger of Hyperledger ledgers (Fabric, Sawtooth, Besu, Indy, Iroha), Quorum, and Corda
+
+* **Test ledger tools**
+    - Ledger tools for Hyperledger ledgers (Fabric, Sawtooth, Besu, Indy, Iroha), Quorum, and Corda
+
+* **Service API and Admin API**
+    - SDK for BLP
+    - SDK for LedgerPlugin
+
+* **Support tools**
+
+* **Error handing**
+    - (Error cases will be listed soon)
+
+* **Others**
+    - Dockernize
+    - Method for providing packages
+    - refactor config files on /etc/cactus of server directory
+
 **Features**
 
 1. Keychain Plugin Implementations:
     * Azure Key Vault
-2. Corda Enterprise Support
-3. Besu Private Transactions
-4. Fabric Private Transactions
-5. Federated Authentication: SAML **and/or** LDAP
+1. Corda Enterprise Support
+1. Besu Private Transactions
+1. Fabric Private Transactions
+1. Federated Authentication: SAML **and/or** LDAP
+1. transaction signer features
+    * Hyperledger ledgers (Iroha, Sawtooth, Fabric v2, Indy, Quorum, Corda)
+1. Corda Enterprise Support
+1. SDK for BLP
+1. SDK for LedgerPlugin
+1. Dockernize
+1. Method for providing packages
+1. refactor config files on /etc/cactus of server directory
+1. Error Handling
 
 **Fixes:**
 
