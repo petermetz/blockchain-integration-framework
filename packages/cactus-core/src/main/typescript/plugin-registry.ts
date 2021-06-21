@@ -1,9 +1,14 @@
 import { Optional } from "typescript-optional";
 import {
+  Logger,
+  LoggerProvider,
+  LogLevelDesc,
+} from "@hyperledger/cactus-common";
+import {
   ICactusPlugin,
   IPluginKeychain,
   isICactusPlugin,
-  PluginAspect,
+  isIPluginKeychain,
 } from "@hyperledger/cactus-core-api";
 
 /**
@@ -11,6 +16,7 @@ import {
  * the `PluginRegistry` class instances.
  */
 export interface IPluginRegistryOptions {
+  logLevel?: LogLevelDesc;
   plugins?: ICactusPlugin[];
 }
 
@@ -23,7 +29,13 @@ export interface IPluginRegistryOptions {
  * classes in place of the interfaces currently describing the plugin architecture.
  */
 export class PluginRegistry {
+  public static readonly CLASS_NAME = "PluginRegistry";
   public readonly plugins: ICactusPlugin[];
+  public readonly log: Logger;
+
+  public get className(): string {
+    return PluginRegistry.CLASS_NAME;
+  }
 
   constructor(public readonly options: IPluginRegistryOptions = {}) {
     const fnTag = `PluginRegistry#constructor()`;
@@ -34,6 +46,11 @@ export class PluginRegistry {
       throw new TypeError(`${fnTag} options.plugins truthy but non-Array`);
     }
     this.plugins = options.plugins || [];
+
+    const level = this.options.logLevel || "INFO";
+    const label = this.className;
+    this.log = LoggerProvider.getOrCreate({ level, label });
+    this.log.debug(`Instantiated ${this.className} OK`);
   }
 
   public getPlugins(): ICactusPlugin[] {
@@ -54,12 +71,6 @@ export class PluginRegistry {
     ) as T;
   }
 
-  public getOneByAspect<T extends ICactusPlugin>(aspect: PluginAspect): T {
-    return this.findOneByAspect(aspect).orElseThrow(
-      () => new Error(`No plugin with aspect: ${aspect}`),
-    ) as T;
-  }
-
   public findOneByPackageName<T extends ICactusPlugin>(
     packageName: string,
   ): Optional<T> {
@@ -77,34 +88,19 @@ export class PluginRegistry {
     ) as T[];
   }
 
-  public findOneByAspect<T extends ICactusPlugin>(
-    aspect: PluginAspect,
-  ): Optional<T> {
-    const plugin = this.getPlugins().find((p) => p.getAspect() === aspect);
-    return Optional.ofNullable(plugin as T);
-  }
-
   public findOneByKeychainId<T extends IPluginKeychain>(keychainId: string): T {
     const fnTag = "PluginRegistry#findOneByKeychainId()";
     if (typeof keychainId !== "string" || keychainId.trim().length < 1) {
       throw new Error(`${fnTag} need keychainId arg as non-blank string.`);
     }
 
-    const plugin = this.findManyByAspect<IPluginKeychain>(
-      PluginAspect.KEYCHAIN,
-    ).find((keychainPlugin) => keychainPlugin.getKeychainId() === keychainId);
+    const plugin = this.plugins
+      .filter((p) => isIPluginKeychain(p))
+      .find((p) => (p as IPluginKeychain).getKeychainId() === keychainId);
 
     return Optional.ofNullable(plugin as T).orElseThrow(
       () => new Error(`${fnTag} No keychain found for ID ${keychainId}`),
     );
-  }
-
-  public findManyByAspect<T extends ICactusPlugin>(aspect: PluginAspect): T[] {
-    return this.getPlugins().filter((p) => p.getAspect() === aspect) as T[];
-  }
-
-  public hasByAspect(aspect: PluginAspect): boolean {
-    return this.findOneByAspect(aspect).isPresent();
   }
 
   public hasByPackageName(packageName: string): boolean {

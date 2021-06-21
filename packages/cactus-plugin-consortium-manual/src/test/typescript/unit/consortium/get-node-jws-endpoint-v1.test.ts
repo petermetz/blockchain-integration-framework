@@ -7,7 +7,11 @@ import { AddressInfo } from "net";
 
 import { IListenOptions, Servers } from "@hyperledger/cactus-common";
 
-import { ConsortiumDatabase, CactusNode } from "@hyperledger/cactus-core-api";
+import {
+  ConsortiumDatabase,
+  CactusNode,
+  Configuration,
+} from "@hyperledger/cactus-core-api";
 
 import { ConsortiumRepository } from "@hyperledger/cactus-core";
 
@@ -18,7 +22,7 @@ import {
 
 import {
   GetNodeJwsEndpoint,
-  IGetNodeJwsEndpointOptions,
+  //  IGetNodeJwsEndpointOptions,
 } from "../../../../main/typescript/public-api";
 
 import { v4 as uuidv4 } from "uuid";
@@ -47,6 +51,7 @@ test("Can provide JWS", async (t: Test) => {
     instanceId: uuidv4(),
     keyPairPem: keyPairPem,
     consortiumDatabase: db,
+    consortiumRepo,
   };
 
   const pluginConsortiumManual: PluginConsortiumManual = new PluginConsortiumManual(
@@ -70,20 +75,16 @@ test("Can provide JWS", async (t: Test) => {
   t.comment(
     `Metrics URL: ${apiHost}/api/v1/plugins/@hyperledger/cactus-plugin-consortium-manual/get-prometheus-exporter-metrics`,
   );
-  const apiClient = new ConsortiumManualApi({ basePath: apiHost });
 
-  await pluginConsortiumManual.installWebServices(expressApp);
+  const config = new Configuration({ basePath: apiHost });
+  const apiClient = new ConsortiumManualApi(config);
 
-  const epOpts: IGetNodeJwsEndpointOptions = {
-    plugin: pluginConsortiumManual,
-    consortiumRepo,
-    keyPairPem,
-  };
+  await pluginConsortiumManual.getOrCreateWebServices();
+  await pluginConsortiumManual.registerWebServices(expressApp);
+
   const pubKeyPem = keyPair.toPEM(false);
 
-  const ep = new GetNodeJwsEndpoint(epOpts);
-
-  const jws = await ep.createJws();
+  const jws = await pluginConsortiumManual.getNodeJws();
   t.ok(jws, "created JWS is truthy");
   t.ok(typeof jws === "object", "created JWS is an object");
 
