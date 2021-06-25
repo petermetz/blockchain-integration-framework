@@ -17,7 +17,6 @@ import {
   ICactusPluginOptions,
   IPluginWebService,
   IWebServiceEndpoint,
-  PluginAspect,
 } from "@hyperledger/cactus-core-api";
 
 // TODO: Writing the getExpressRequestHandler() method for
@@ -36,7 +35,7 @@ export interface IPluginKeychainVaultOptions extends ICactusPluginOptions {
   logLevel?: LogLevelDesc;
   keychainId: string;
   /**
-   * API version to use when talking to the backing Vault instnace through
+   * API version to use when talking to the backing Vault instance through
    * the NodeJS vault-node client.
    * Optional, defaults to `v1`
    */
@@ -73,9 +72,10 @@ export class PluginKeychainVault implements ICactusPlugin, IPluginWebService {
   private readonly instanceId: string;
   private readonly kvSecretsMountPath: string;
   private readonly backend: Vault.client;
+  private endpoints: IWebServiceEndpoint[] | undefined;
   public prometheusExporter: PrometheusExporter;
 
-  public get className() {
+  public get className(): string {
     return PluginKeychainVault.CLASS_NAME;
   }
 
@@ -131,9 +131,16 @@ export class PluginKeychainVault implements ICactusPlugin, IPluginWebService {
     return res;
   }
 
-  public async installWebServices(
-    expressApp: Express,
-  ): Promise<IWebServiceEndpoint[]> {
+  async registerWebServices(app: Express): Promise<IWebServiceEndpoint[]> {
+    const webServices = await this.getOrCreateWebServices();
+    await Promise.all(webServices.map((ws) => ws.registerExpress(app)));
+    return webServices;
+  }
+
+  public async getOrCreateWebServices(): Promise<IWebServiceEndpoint[]> {
+    if (Array.isArray(this.endpoints)) {
+      return this.endpoints;
+    }
     const endpoints: IWebServiceEndpoint[] = [];
 
     // TODO: Writing the getExpressRequestHandler() method for
@@ -159,9 +166,10 @@ export class PluginKeychainVault implements ICactusPlugin, IPluginWebService {
         logLevel: this.opts.logLevel,
       };
       const ep = new GetPrometheusExporterMetricsEndpointV1(opts);
-      ep.registerExpress(expressApp);
       endpoints.push(ep);
     }
+
+    this.endpoints = endpoints;
 
     return endpoints;
   }
@@ -184,10 +192,6 @@ export class PluginKeychainVault implements ICactusPlugin, IPluginWebService {
 
   public getPackageName(): string {
     return `@hyperledger/cactus-plugin-keychain-vault`;
-  }
-
-  public getAspect(): PluginAspect {
-    return PluginAspect.KEYCHAIN;
   }
 
   async rotateEncryptionKeys(): Promise<void> {
@@ -238,7 +242,7 @@ export class PluginKeychainVault implements ICactusPlugin, IPluginWebService {
       return res;
     } catch (ex) {
       // We have to make sure that the exception is either an expected
-      // or an unexpected one where the expeted exception is what we
+      // or an unexpected one where the expected exception is what we
       // get when the key is not present in the keychain and anything
       // else being an unexpected exception that we do not want to
       // handle nor suppress under any circumstances since doing so

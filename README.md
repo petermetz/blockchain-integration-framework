@@ -50,6 +50,11 @@ Once the last command has finished executing, open link printed on the console w
 
 * [Project Wiki](https://wiki.hyperledger.org/display/cactus): Schedule and logs of the maintainer meetings
 * [Whitepaper](./whitepaper/whitepaper.md): The official document on Cactus design specifications
+* [Contributing](./CONTRIBUTING.md): How to get from an idea to an approved pull request
+* [Build](./BUILD.md): Instructions on how to set up the project for development
+
+  ![Build Script Decision Tree](./docs/images/build-script-decision-tree-2021-03-06.png)
+* [FAQ](./FAQ.md): A collection of frequently asked questions
 
 ## Roadmap
 
@@ -58,6 +63,10 @@ Can be found here: [ROADMAP.md](./ROADMAP.md)
 ## Contact
 * mailing list: [cactus@lists.hyperledger.org](mailto:cactus@lists.hyperledger.org)
 * rocketchat channel: [https://chat.hyperledger.org/channel/cactus](https://chat.hyperledger.org/channel/cactus).
+
+## Build/Development Flow
+
+To go from zero to hero with project setup and working on your contributions: [BUILD.md](./BUILD.md)
 
 ## Contributing
 We welcome contributions to Hyperledger Cactus in many forms, and there’s always plenty to do!
