@@ -109,19 +109,19 @@ Halves are defined as:
 **Checking points for releasing V1-RC**
 
 * **Validator**
-    - Validators for Hyperledger ledgers (Fabric, Sawtooth, Besu, Indy, Iroha), Quorum, and Corda
+    - Validators for Hyperledger ledgers (Fabric, Sawtooth, Besu, Indy, Iroha), Quorum, Go-Ethereum, and Corda
 
 * **Verifier**
     - All sync/async requests from BLP must communicate with  Validator (toward ledgers) via Verifier
-    - transaction signer features for Hyperledger ledgers (Fabric, Sawtooth, Besu, Indy, Iroha), Quorum, and Corda
+    - transaction signer features for Hyperledger ledgers (Fabric, Sawtooth, Besu, Indy, Iroha), Quorum, Go-Ethereum, and Corda
 
 * **BLP-attached optional plugins**
 
 * **BLP applications**
-    - BLP applications using each ledger of Hyperledger ledgers (Fabric, Sawtooth, Besu, Indy, Iroha), Quorum, and Corda
+    - BLP applications using each ledger of Hyperledger ledgers (Fabric, Sawtooth, Besu, Indy, Iroha), Quorum, Go-Ethereum, and Corda
 
 * **Test ledger tools**
-    - Ledger tools for Hyperledger ledgers (Fabric, Sawtooth, Besu, Indy, Iroha), Quorum, and Corda
+    - Ledger tools for Hyperledger ledgers (Fabric, Sawtooth, Besu, Indy, Iroha), Quorum, Go-Ethereum, and Corda
 
 * **Service API and Admin API**
     - SDK for BLP
@@ -129,11 +129,17 @@ Halves are defined as:
 
 * **Support tools**
 
+* **Dockernize**
+    - Dockernize Cactus Node Server
+    - Dockernize Cactus validators for the ledgers of Hyperledger ledgers (Fabric, Sawtooth, Besu, Indy, Iroha), Quorum, Go-Ethereum, and Corda
+
 * **Error handing**
     - (Error cases will be listed soon)
 
+* **Satisfying the test items to ensure quality**
+    - (TBA)
+
 * **Others**
-    - Dockernize
     - Method for providing packages
     - refactor config files on /etc/cactus of server directory
 
