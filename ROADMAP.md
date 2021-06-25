@@ -106,40 +106,40 @@ Halves are defined as:
 
 ## 2021 Q3
 
-**Checking points for releasing V1-RC**
+**Checkpoints for releasing V1-RC**
 
-* **Validator**
+1. **Validator**
     - Validators for Hyperledger ledgers (Fabric, Sawtooth, Besu, Indy, Iroha), Quorum, Go-Ethereum, and Corda
 
-* **Verifier**
+2. **Verifier**
     - All sync/async requests from BLP must communicate with  Validator (toward ledgers) via Verifier
     - transaction signer features for Hyperledger ledgers (Fabric, Sawtooth, Besu, Indy, Iroha), Quorum, Go-Ethereum, and Corda
 
-* **BLP-attached optional plugins**
+3. **BLP-attached optional plugins**
 
-* **BLP applications**
+4. **BLP applications**
     - BLP applications using each ledger of Hyperledger ledgers (Fabric, Sawtooth, Besu, Indy, Iroha), Quorum, Go-Ethereum, and Corda
 
-* **Test ledger tools**
+5. **Test ledger tools**
     - Ledger tools for Hyperledger ledgers (Fabric, Sawtooth, Besu, Indy, Iroha), Quorum, Go-Ethereum, and Corda
 
-* **Service API and Admin API**
+6. **Service API and Admin API**
     - SDK for BLP
     - SDK for LedgerPlugin
 
-* **Support tools**
+7. **Support tools**
 
-* **Dockernize**
+8. **Dockernize**
     - Dockernize Cactus Node Server
     - Dockernize Cactus validators for the ledgers of Hyperledger ledgers (Fabric, Sawtooth, Besu, Indy, Iroha), Quorum, Go-Ethereum, and Corda
 
-* **Error handing**
+9. **Error handing**
     - (Error cases will be listed soon)
 
-* **Satisfying the test items to ensure quality**
+10. **Satisfying the test items to ensure quality**
     - (TBA)
 
-* **Others**
+11. **Others**
     - Method for providing packages
     - refactor config files on /etc/cactus of server directory
 
